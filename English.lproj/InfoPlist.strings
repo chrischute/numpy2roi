@@ -1,0 +1,6 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleName = "NumPy2ROI";
+CFBundleShortVersionString = "1.0";
+CFBundleGetInfoString = "NumPy2ROI version 1.0, Copyright (c) 2018 Christopher Chute.";
+NSHumanReadableCopyright = "Copyright (c) 2018 Christopher Chute.";
