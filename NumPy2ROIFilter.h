@@ -12,9 +12,10 @@
 
 @interface NumPy2ROIFilter : PluginFilter
 {
-    
+
     IBOutlet NSWindow *window;
-    IBOutlet NSTextField *thresholdROIname;
+    IBOutlet NSTextField *roiName;         // Name for ROI
+    IBOutlet NSTextField *thresholdValue;  // Voxel v is in ROI if v > thresholdValue
 
 }
 

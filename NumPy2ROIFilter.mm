@@ -25,8 +25,9 @@
     {
 
         // User clicked OK Button
-        NSString *ThresholdROIName = [thresholdROIname stringValue];
-        
+        NSString *roiNameString = [roiName stringValue];
+        float thresholdFloatValue = [thresholdValue floatValue];
+
         int startSlice = 0;
         int endSlice = [[viewerController pixList] count];
         int pixIncrement = endSlice;
@@ -50,7 +51,7 @@
             // Fill slice with mask values
             for (int j = 0; j < numPixels; ++j)
             {
-                if ([[mask objectAtIndex:(npySliceIdx + j * pixIncrement)] floatValue] > 0)
+                if ([[mask objectAtIndex:(npySliceIdx + j * pixIncrement)] floatValue] > thresholdFloatValue)
                 {
                     textureBuffer[j] = 0xFF;
                     isEmptyROI = FALSE;
@@ -67,7 +68,7 @@
                 
                 thresholdROI = [[[ROI alloc] initWithTexture:textureBuffer
                                              textWidth:[curPix pwidth] textHeight:[curPix pheight]
-                                             textName:ThresholdROIName positionX:0 positionY:0
+                                             textName:roiNameString positionX:0 positionY:0
                                              spacingX:[curPix pixelSpacingX]
                                              spacingY:[curPix pixelSpacingY]
                                              imageOrigin:NSMakePoint([curPix originX], [curPix originY])]
@@ -83,36 +84,6 @@
             }
 
             free(textureBuffer);
-            
-        }
-        
-    }
-
-}
-
-- (void) SetSignalIntensity
-{
-    float maxValue = 0;
-    float minValue = 0;
-    
-    for (unsigned int i = 0; i < [[viewerController pixList] count]; i++)
-    {
-        DCMPix *curPix = [[viewerController pixList] objectAtIndex: i];
-        float *fImage = [curPix fImage];
-        
-        int SumOfPixels = [curPix pwidth] * [curPix pheight];
-        
-        for (int j = 0; j < SumOfPixels; j++)
-        {
-            
-            if (fImage[j] > maxValue)
-            {
-                maxValue = fImage[j];
-            } else
-                if (fImage[j] < minValue)
-                {
-                    minValue = fImage[j];
-                }
             
         }
         
@@ -152,7 +123,6 @@
         {
             NSString *url = [[urls objectAtIndex:i] path];
             self.npyURL = [[NSString alloc] initWithString: url];
-            NSLog(@"Chose Url: %@", self.npyURL);
         }
         assert(self.npyURL != NULL);
     }
@@ -160,8 +130,6 @@
     // Allow user to name the ROI.
     [NSBundle loadNibNamed:@"NumPy2ROI_Dialog" owner:self];
     [NSApp beginSheet: window modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:nil contextInfo:nil];
-    
-    [self SetSignalIntensity];
     
     return 0;
 }

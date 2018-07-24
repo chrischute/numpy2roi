@@ -37,7 +37,7 @@ using namespace cnpy;
         std::vector<unsigned short> v = a.as_vec<unsigned short>();
         result = [NSMutableArray arrayWithCapacity: v.size()];
         for (size_t i = 0; i < v.size(); ++i) {
-            [result addObject:[NSNumber numberWithUnsignedShort: v[i]]]; // TODO: Changed this from char to short and did not test
+            [result addObject:[NSNumber numberWithUnsignedShort: v[i]]];
         }
     } else if (a.word_size == 4) {
         std::vector<float> v = a.as_vec<float>();
