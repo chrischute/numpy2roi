@@ -15,7 +15,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="NumPy2ROI" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" visibleAtLaunch="NO" animationBehavior="default" id="1" userLabel="ImportNumPy">
+        <window title="NumPy2ROI" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" visibleAtLaunch="NO" animationBehavior="default" id="1" userLabel="NumPyToROI">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="374" height="303"/>
@@ -99,6 +99,7 @@ Gw
             </view>
             <point key="canvasLocation" x="82" y="154.5"/>
         </window>
+        <userDefaultsController representsSharedInstance="YES" id="Q7l-Jl-vp2"/>
     </objects>
     <resources>
         <image name="NSInfo" width="32" height="32"/>

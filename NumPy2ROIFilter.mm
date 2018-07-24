@@ -5,6 +5,8 @@
 //  Copyright (c) 2018 Christopher Chute. All rights reserved.
 //
 
+#import "OsirixAPI/browserController.h"
+
 #import "NumPy2ROIFilter.h"
 
 @implementation NumPy2ROIFilter
@@ -30,8 +32,9 @@
         int pixIncrement = endSlice;
         
         // TODO: Dispatch load asynchronously
+        assert(self.npyURL != NULL);
         NumPyLoader *loader = [[NumPyLoader alloc]init];
-        NSMutableArray *mask = [loader load:@"/Users/christopherchute/Desktop/test.npy"];
+        NSMutableArray *mask = [loader load: self.npyURL];
 
         for (int i = startSlice; i < endSlice; i++)
         {
@@ -119,12 +122,46 @@
 
 - (long) filterImage:(NSString*) menuName
 {
+    // Create the File Open Dialog class.
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    
+    // Enable the selection of files in the dialog.
+    [openDlg setCanChooseFiles:YES];
+    
+    // Multiple files not allowed
+    [openDlg setAllowsMultipleSelection:NO];
+    
+    // Can't select a directory
+    [openDlg setCanChooseDirectories:NO];
+    
+    // Display the dialog. If the OK button was pressed, process the files.
+    if (self.npyURL != NULL)
+    {
+        free(self.npyURL);
+        self.npyURL = NULL;
+    }
+    
+    if ( [openDlg runModal] == NSOKButton )
+    {
+        // Get an array containing the full filenames of all
+        // files and directories selected.
+        NSArray* urls = [openDlg URLs];
+        
+        // Loop through all the files and process them.
+        for(int i = 0; i < [urls count]; i++ )
+        {
+            NSString *url = [[urls objectAtIndex:i] path];
+            self.npyURL = [[NSString alloc] initWithString: url];
+            NSLog(@"Chose Url: %@", self.npyURL);
+        }
+        assert(self.npyURL != NULL);
+    }
+
+    // Allow user to name the ROI.
     [NSBundle loadNibNamed:@"NumPy2ROI_Dialog" owner:self];
     [NSApp beginSheet: window modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:nil contextInfo:nil];
     
-    
     [self SetSignalIntensity];
-    
     
     return 0;
 }

@@ -10,12 +10,15 @@
 
 #import "NumPyLoader.h"
 
-@interface NumPy2ROIFilter : PluginFilter {
-
+@interface NumPy2ROIFilter : PluginFilter
+{
+    
     IBOutlet NSWindow *window;
     IBOutlet NSTextField *thresholdROIname;
-    
+
 }
+
+@property NSString *npyURL;
 
 - (long) filterImage:(NSString*) menuName;
 - (void) CreateBrushROI:(id) sender;
